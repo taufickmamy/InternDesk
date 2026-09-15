@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InternDesk</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" href="interndesk.css" />
+  </head>
+  <body data-page="app" class="auth-pending">
+    <header class="topbar">
+      <span class="brand">InternDesk</span>
+
+      <nav class="app-nav">
+        <button class="app-nav__btn" data-app-tab="home" aria-label="Accueil">
+          <img
+            class="app-nav__icon"
+            src="images/home.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+        <button
+          class="app-nav__btn"
+          data-app-tab="messages"
+          aria-label="Messages"
+        >
+          <img
+            class="app-nav__icon"
+            src="images/messages.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+        <button
+          class="app-nav__btn active"
+          data-app-tab="raids"
+          aria-label="Raids"
+        >
+          <img
+            class="app-nav__icon"
+            src="images/raids.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+        <button
+          class="app-nav__btn"
+          data-app-tab="notifications"
+          aria-label="Notifications"
+        >
+          <img
+            class="app-nav__icon"
+            src="images/notifications.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+        <button
+          class="app-nav__btn"
+          data-app-tab="search"
+          aria-label="Recherche"
+        >
+          <img
+            class="app-nav__icon"
+            src="images/search.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+      </nav>
+
+      <div class="topbar__right">
+        <button
+          class="app-nav__btn"
+          data-app-tab="settings"
+          aria-label="Paramètres"
+        >
+          <img
+            class="app-nav__icon"
+            src="images/settings.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="app-view" data-app-view="home" hidden>
+        <div class="feed">
+          <h1 class="feed__title" data-i18n="feed_title">Offres des autres</h1>
+          <div class="feed__list" id="feedList"></div>
+          <p class="empty" id="feedEmpty" hidden data-i18n="feed_empty">
+            Aucune offre pour l'instant.
+          </p>
+        </div>
+      </section>
+
+      <section class="app-view" data-app-view="messages" hidden>
+        <h2 data-i18n="messages_title">Messages</h2>
+        <p class="muted" data-i18n="messages_sub">
+          Vos conversations récentes.
+        </p>
+        <p class="empty" data-i18n="empty_messages">
+          Aucune conversation pour l'instant.
+        </p>
+      </section>
+
+      <section class="app-view" data-app-view="raids">
+        <div class="raids">
+          <h1 class="raids__title" data-i18n="raids_title">Raids</h1>
+
+          <button
+            type="button"
+            class="raids__announce"
+            id="announceBtn"
+            data-i18n="raids_announce"
+          >
+            Faire une annonce
+          </button>
+
+          <form class="compose" id="composeForm" novalidate hidden>
+            <input
+              type="text"
+              id="composeTitle"
+              class="compose__input"
+              data-i18n-placeholder="compose_title"
+              placeholder="Titre de votre annonce"
+              required
+            />
+            <input
+              type="text"
+              id="composeCompany"
+              class="compose__input"
+              data-i18n-placeholder="compose_company"
+              placeholder="Entreprise (optionnel)"
+            />
+            <textarea
+              id="composeText"
+              class="compose__input"
+              rows="3"
+              data-i18n-placeholder="compose_text"
+              placeholder="Décrivez votre offre…"
+            ></textarea>
+            <input
+              type="text"
+              id="composeImage"
+              class="compose__input"
+              data-i18n-placeholder="compose_image"
+              placeholder="URL d'une image (optionnel)"
+            />
+            <div class="compose__actions">
+              <button
+                type="submit"
+                class="btn btn--primary"
+                data-i18n="compose_publish"
+              >
+                Publier
+              </button>
+            </div>
+            <p class="error" id="composeError" hidden></p>
+          </form>
+
+          <h2 class="raids__subtitle" data-i18n="raids_mine">Mes annonces</h2>
+          <div class="feed__list" id="myPostsList"></div>
+          <p class="empty" id="myPostsEmpty" hidden data-i18n="my_posts_empty">
+            Vous n'avez encore rien publié.
+          </p>
+        </div>
+      </section>
+
+      <section class="app-view" data-app-view="notifications" hidden>
+        <h2 data-i18n="notifications_title">Notifications</h2>
+        <p class="muted" data-i18n="notifications_sub">
+          Vos dernières alertes.
+        </p>
+        <p class="empty" data-i18n="empty_notifications">
+          Aucune notification pour l'instant.
+        </p>
+      </section>
+
+      <section class="app-view" data-app-view="search" hidden>
+        <h2 data-i18n="search_title">Recherche</h2>
+        <p class="muted" data-i18n="search_sub">
+          Trouvez une annonce ou une entreprise.
+        </p>
+
+        <label class="field">
+          <span data-i18n="search_field">Que cherchez-vous ?</span>
+          <input
+            type="text"
+            id="searchInput"
+            data-i18n-placeholder="search_placeholder"
+            placeholder="Titre, entreprise, mot-clé…"
+          />
+        </label>
+
+        <div class="feed__list" id="searchList"></div>
+        <p class="empty" id="emptySearch" hidden data-i18n="empty_search">
+          Aucun résultat.
+        </p>
+      </section>
+
+      <section
+        class="app-view app-view--settings"
+        data-app-view="settings"
+        hidden
+      >
+        <aside class="settings-menu">
+          <button class="settings-menu__btn active" data-settings-tab="profile">
+            <span data-i18n="settings_profile">Profil</span>
+          </button>
+          <button class="settings-menu__btn" data-settings-tab="theme">
+            <span data-i18n="settings_theme">Thème</span>
+          </button>
+          <button class="settings-menu__btn" data-settings-tab="account">
+            <span data-i18n="settings_danger">Compte</span>
+          </button>
+        </aside>
+
+        <div class="settings-content">
+          <div class="settings-pane" data-settings-pane="profile">
+            <h1 data-i18n="settings_profile">Profil</h1>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_photo">
+                Photo de profil
+              </span>
+              <div class="settings-photo">
+                <div
+                  class="settings-photo__preview"
+                  id="profilePreview"
+                  role="button"
+                  tabindex="0"
+                  aria-label="Voir la photo"
+                >
+                  <span id="profileInitial">—</span>
+                </div>
+                <button
+                  type="button"
+                  class="settings-photo__btn"
+                  id="profilePhotoBtn"
+                  aria-label="Changer la photo"
+                >
+                  <img
+                    class="settings-photo__icon"
+                    src="images/profile.png"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+                <input
+                  type="file"
+                  id="profilePhotoInput"
+                  accept="image/*"
+                  hidden
+                />
+              </div>
+            </div>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_name"
+                >Nom</span
+              >
+              <span class="settings-row__value" id="settingsName">—</span>
+            </div>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_email"
+                >Email</span
+              >
+              <span class="settings-row__value" id="settingsEmail">—</span>
+            </div>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_region"
+                >Région</span
+              >
+              <span class="settings-row__value" id="settingsRegion">—</span>
+            </div>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_phone"
+                >Numéro</span
+              >
+              <span class="settings-row__value" id="settingsPhone">—</span>
+            </div>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_role"
+                >Poste</span
+              >
+              <span class="settings-row__value" id="settingsRole">—</span>
+            </div>
+          </div>
+
+          <div class="settings-pane" data-settings-pane="theme" hidden>
+            <h1 data-i18n="settings_theme">Thème</h1>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_mode"
+                >Mode</span
+              >
+              <div
+                class="mini-switch"
+                id="themeToggle"
+                role="group"
+                aria-label="Mode"
+              >
+                <button
+                  type="button"
+                  class="mini-switch__btn"
+                  data-theme="light"
+                  aria-label="Mode clair"
+                >
+                  <img
+                    class="mini-switch__icon"
+                    src="images/clair.png"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="mini-switch__btn"
+                  data-theme="dark"
+                  aria-label="Mode sombre"
+                >
+                  <img
+                    class="mini-switch__icon"
+                    src="images/sombre.png"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
+            </div>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_language"
+                >Langue</span
+              >
+              <div class="mini-switch" id="langSwitch">
+                <button
+                  type="button"
+                  class="mini-switch__btn"
+                  data-lang="fr"
+                  aria-label="Français"
+                >
+                  <img
+                    class="mini-switch__icon"
+                    src="images/fr.png"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="mini-switch__btn"
+                  data-lang="mg"
+                  aria-label="Malagasy"
+                >
+                  <img
+                    class="mini-switch__icon"
+                    src="images/mg.png"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  type="button"
+                  class="mini-switch__btn"
+                  data-lang="en"
+                  aria-label="English"
+                >
+                  <img
+                    class="mini-switch__icon"
+                    src="images/en.png"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="settings-pane" data-settings-pane="account" hidden>
+            <h1 data-i18n="settings_danger">Compte</h1>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_password">
+                Changer le mot de passe
+              </span>
+              <button
+                type="button"
+                class="mini-action"
+                id="changePasswordBtn"
+                aria-label="Changer le mot de passe"
+              >
+                <img
+                  class="mini-action__icon"
+                  src="images/password.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+
+            <div class="settings-row">
+              <span class="settings-row__label" data-i18n="settings_delete">
+                Supprimer le compte
+              </span>
+              <button
+                type="button"
+                class="mini-action"
+                id="deleteAccountBtn"
+                disabled
+                aria-label="Supprimer le compte"
+              >
+                <img
+                  class="mini-action__icon"
+                  src="images/delete.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </button>
+            </div>
+
+            <div class="settings-row settings-row--signout">
+              <button
+                class="btn btn--ghost settings-signout"
+                id="logoutBtn"
+                data-i18n="btn_logout"
+              >
+                <img
+                  class="settings-signout__icon"
+                  src="images/signout.png"
+                  alt=""
+                  aria-hidden="true"
+                />
+                <span>Déconnexion</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="avatar-viewer" id="avatarViewer" hidden>
+      <button
+        type="button"
+        class="avatar-viewer__close"
+        id="avatarViewerClose"
+        aria-label="Fermer"
+      >
+        ✕
+      </button>
+      <img class="avatar-viewer__img" id="avatarViewerImg" src="" alt="" />
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="interndesk.js"></script>
+  </body>
+</html>

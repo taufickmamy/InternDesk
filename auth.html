@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InternDesk</title>
+    <link rel="icon" type="image/png" href="images/favicon.png" />
+    <link rel="stylesheet" href="interndesk.css" />
+  </head>
+  <body data-page="auth">
+    <div class="lang-switch" id="langSwitch">
+      <button
+        type="button"
+        class="lang-switch__btn"
+        id="langSwitchBtn"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+      >
+        <img
+          class="lang-switch__icon"
+          id="langSwitchIcon"
+          src="images/fr.png"
+          alt=""
+          aria-hidden="true"
+        />
+      </button>
+      <div class="lang-switch__menu" id="langSwitchMenu" role="listbox">
+        <button
+          type="button"
+          class="lang-switch__option"
+          data-lang="fr"
+          role="option"
+        >
+          <img
+            class="lang-switch__icon"
+            src="images/fr.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <span>Français</span>
+        </button>
+        <button
+          type="button"
+          class="lang-switch__option"
+          data-lang="mg"
+          role="option"
+        >
+          <img
+            class="lang-switch__icon"
+            src="images/mg.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <span>Malagasy</span>
+        </button>
+        <button
+          type="button"
+          class="lang-switch__option"
+          data-lang="en"
+          role="option"
+        >
+          <img
+            class="lang-switch__icon"
+            src="images/en.png"
+            alt=""
+            aria-hidden="true"
+          />
+          <span>English</span>
+        </button>
+      </div>
+    </div>
+
+    <main class="auth-layout">
+      <aside class="auth-aside">
+        <div class="auth-aside__top">
+          <span class="brand">InternDesk</span>
+        </div>
+
+        <div class="auth-aside__body">
+          <span class="auth-aside__eyebrow" data-i18n="aside_eyebrow">
+            Suivi de stages
+          </span>
+          <h1>
+            <span data-i18n="aside_title_1">Vos stages,</span><br />
+            <span data-i18n="aside_title_2">organisés.</span>
+          </h1>
+          <p class="auth-aside__text" data-i18n="aside_text">
+            Centralisez vos candidatures, suivez chaque statut et gardez une vue
+            claire de votre progression.
+          </p>
+
+          <ul class="auth-features">
+            <li>
+              <span class="auth-features__bar auth-features__bar--ok"></span>
+              <span data-i18n="feature_1">Feed d'offres</span>
+            </li>
+            <li>
+              <span class="auth-features__bar auth-features__bar--warn"></span>
+              <span data-i18n="feature_2">Suivi des statuts</span>
+            </li>
+            <li>
+              <span class="auth-features__bar auth-features__bar--bad"></span>
+              <span data-i18n="feature_3">Historique complet</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="auth-aside__illustration">
+          <img
+            class="auth-illustration"
+            src="images/illustration.png"
+            alt=""
+            aria-hidden="true"
+          />
+        </div>
+
+        <div
+          class="theme-switch"
+          id="themeToggle"
+          role="group"
+          aria-label="Thème"
+        >
+          <button
+            type="button"
+            class="theme-switch__btn"
+            data-theme="light"
+            aria-label="Mode clair"
+          >
+            <img
+              class="theme-switch__icon"
+              src="images/clair.png"
+              alt=""
+              aria-hidden="true"
+            />
+          </button>
+          <button
+            type="button"
+            class="theme-switch__btn"
+            data-theme="dark"
+            aria-label="Mode sombre"
+          >
+            <img
+              class="theme-switch__icon"
+              src="images/sombre.png"
+              alt=""
+              aria-hidden="true"
+            />
+          </button>
+        </div>
+      </aside>
+
+      <section class="auth-main">
+        <div class="auth-main__inner">
+          <div class="auth-tabs">
+            <button
+              class="auth-tab active"
+              data-auth-tab="login"
+              data-i18n="tab_login"
+            >
+              Connexion
+            </button>
+            <button
+              class="auth-tab"
+              data-auth-tab="register"
+              data-i18n="tab_register"
+            >
+              Créer un compte
+            </button>
+          </div>
+
+          <div class="auth-panel" data-auth-panel="login">
+            <h2 data-i18n="login_title">Connexion</h2>
+
+            <form id="loginForm" novalidate>
+              <label class="field">
+                <span data-i18n="field_email">Email</span>
+                <input
+                  type="email"
+                  name="email"
+                  id="loginEmail"
+                  data-i18n-placeholder="placeholder_email"
+                  placeholder="votre email"
+                  required
+                />
+              </label>
+
+              <label class="field">
+                <span data-i18n="field_password">Mot de passe</span>
+                <span class="field-password">
+                  <input
+                    type="password"
+                    name="password"
+                    id="loginPassword"
+                    placeholder="••••••••"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="field-password__toggle"
+                    data-toggle-password="loginPassword"
+                    aria-label="Afficher le mot de passe"
+                  >
+                    <img
+                      class="field-password__icon"
+                      src="images/mdpinvisible.png"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  </button>
+                </span>
+              </label>
+
+              <div class="row-between">
+                <label class="check">
+                  <input type="checkbox" id="remember" />
+                  <span data-i18n="field_remember">Se souvenir de moi</span>
+                </label>
+                <a href="#" class="link" data-i18n="link_forgot">
+                  Mot de passe oublié ?
+                </a>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn--primary btn--full"
+                data-i18n="btn_login"
+              >
+                Se connecter
+              </button>
+              <p class="error" id="loginError" hidden></p>
+            </form>
+          </div>
+
+          <div class="auth-panel" data-auth-panel="register" hidden>
+            <h2 data-i18n="register_title">Créer un compte</h2>
+
+            <form id="registerForm" novalidate>
+              <div class="role-choice">
+                <label class="role-choice__item">
+                  <input type="radio" name="role" value="candidate" checked />
+                  <span data-i18n="role_candidate">Postuler</span>
+                </label>
+                <label class="role-choice__item">
+                  <input type="radio" name="role" value="company" />
+                  <span data-i18n="role_company">Entreprise</span>
+                </label>
+              </div>
+
+              <div class="grid-2">
+                <label class="field">
+                  <span data-i18n="field_lastname">Nom</span>
+                  <input type="text" name="lastName" id="lastName" required />
+                </label>
+                <label class="field">
+                  <span data-i18n="field_firstname">Prénom</span>
+                  <input type="text" name="firstName" id="firstName" required />
+                </label>
+              </div>
+
+              <label class="field">
+                <span data-i18n="field_email">Email</span>
+                <input type="email" name="email" id="registerEmail" required />
+              </label>
+
+              <div class="grid-2">
+                <label class="field">
+                  <span data-i18n="field_region">Région</span>
+                  <input type="text" name="region" id="registerRegion" />
+                </label>
+                <label class="field">
+                  <span data-i18n="field_phone">Numéro</span>
+                  <input type="tel" name="phone" id="registerPhone" />
+                </label>
+              </div>
+
+              <div class="grid-2">
+                <label class="field">
+                  <span data-i18n="field_password">Mot de passe</span>
+                  <span class="field-password">
+                    <input
+                      type="password"
+                      name="password"
+                      id="registerPassword"
+                      required
+                      minlength="6"
+                    />
+                    <button
+                      type="button"
+                      class="field-password__toggle"
+                      data-toggle-password="registerPassword"
+                      aria-label="Afficher le mot de passe"
+                    >
+                      <img
+                        class="field-password__icon"
+                        src="images/mdpinvisible.png"
+                        alt=""
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </span>
+                </label>
+                <label class="field">
+                  <span data-i18n="field_confirm">Confirmation</span>
+                  <span class="field-password">
+                    <input
+                      type="password"
+                      name="confirm"
+                      id="registerConfirm"
+                      required
+                      minlength="6"
+                    />
+                    <button
+                      type="button"
+                      class="field-password__toggle"
+                      data-toggle-password="registerConfirm"
+                      aria-label="Afficher le mot de passe"
+                    >
+                      <img
+                        class="field-password__icon"
+                        src="images/mdpinvisible.png"
+                        alt=""
+                        aria-hidden="true"
+                      />
+                    </button>
+                  </span>
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn--primary btn--full"
+                data-i18n="btn_register"
+              >
+                Créer le compte
+              </button>
+              <p class="error" id="registerError" hidden></p>
+              <p class="success" id="registerSuccess" hidden></p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="auth.js"></script>
+    <script src="interndesk.js"></script>
+  </body>
+</html>

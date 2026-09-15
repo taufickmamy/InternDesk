@@ -1,0 +1,3 @@
+# InternDesk
+
+Vos stages, organisés.
